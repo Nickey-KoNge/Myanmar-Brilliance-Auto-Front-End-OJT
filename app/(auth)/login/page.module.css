@@ -1,0 +1,37 @@
+.pageContainer {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 1rem;
+}
+.togglediv {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+
+  background-color: black;
+  border-radius: 10px;
+  width: 100px;
+  height: 60px;
+}
+.themeToggle {
+  position: absolute;
+  top: 0.6rem;
+  right: 2rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.themeToggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
