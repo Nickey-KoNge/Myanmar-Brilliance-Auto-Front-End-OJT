@@ -1,0 +1,45 @@
+.dashboardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.liveBtn {
+  background-color: #1e1e1e;
+  border: 1px solid #2a2a2a;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+.liveBtn::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background-color: #4ade80;
+  border-radius: 50%;
+}
+.topRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.middleRow {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+/* Chart placeholders */
+.chartPlaceholder {
+  background-color: #1e1e1e;
+  height: 300px;
+  border-radius: 12px;
+  border: 1px solid #2a2a2a;
+  padding: 1.5rem;
+}

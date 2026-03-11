@@ -1,0 +1,19 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #121212; /* Dark background */
+  color: #ffffff;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 250px; /* Sidebar width */
+}
+
+.pageContent {
+  padding: 1.5rem 2rem;
+  overflow-y: auto;
+  height: calc(100vh - 70px); /* Minus Topbar height */
+}

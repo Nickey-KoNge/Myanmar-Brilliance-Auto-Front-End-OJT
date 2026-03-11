@@ -14,6 +14,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Input } from "@/app/components/ui/Input/Input";
 import { Button } from "@/app/components/ui/Button/Button";
 import { Checkbox } from "@/app/components/ui/Checkbox/Checkbox";
+import { useRouter } from "next/navigation";
 
 type LoginInputs = {
   email: string;
@@ -22,15 +23,16 @@ type LoginInputs = {
 };
 
 export const LoginForm = () => {
- 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginInputs>();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<LoginInputs> = (data) => {
     console.log("Form Submitted Data: ", data);
+    router.push("/dashboard");
   };
 
   return (
