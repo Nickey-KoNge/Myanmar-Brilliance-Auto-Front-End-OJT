@@ -31,7 +31,7 @@ export const LoginForm = () => {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<LoginInputs> = (data) => {
-    console.log("Form Submitted Data: ", data);
+    console.log("Form Submitted Data: this is test ", data);
     router.push("/dashboard");
   };
 
