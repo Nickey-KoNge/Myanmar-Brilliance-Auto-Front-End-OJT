@@ -1,14 +1,19 @@
-'use client'
-import { PageHeader } from '@/app/components/ui/PageHeader/pageheader'
-import { faAdd, faBrain, faCodeBranch, faCommentNodes, faRoute } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button } from '@/app/components/ui/Button/Button'
-import  {useEffect } from 'react'
-import React from 'react'
-import TableSearchLayout from './TableSearchLayout'
-import SearchModal from './components/Search/SearchModal'
-import DynamicTable from './components/Table/Table'
-
+"use client";
+import { PageHeader } from "@/app/components/ui/PageHeader/pageheader";
+import {
+  faAdd,
+  faBrain,
+  faCodeBranch,
+  faCommentNodes,
+  faRoute,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button } from "@/app/components/ui/Button/Button";
+import { useEffect } from "react";
+import React from "react";
+import TableSearchLayout from "./TableSearchLayout";
+import SearchModal from "./components/Search/SearchModal";
+import DynamicTable from "./components/Table/Table";
 
 export default function BranchPage() {
   const [branchData, setBranchData] = React.useState<any[]>([]);
@@ -23,27 +28,16 @@ export default function BranchPage() {
       const result = await response.json();
       console.log("API Response:", result); // Log the entire API response
 
- const [branchData, setBranchData] = React.useState<any[]>([]);
-    const fetchBranchData = async () => {
-        try {
-            const response = await fetch('http://localhost:3001/master-company/branches');
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const result = await response.json();
-            console.log('API Response:', result); // Log the entire API response
-
-            if (result && result.data && Array.isArray(result.data.data)) {
-                setBranchData(result.data.data); // Extract the nested data array
-                console.log('Branch Data Set:', result.data.data); // Log the extracted data
-            } else {
-                console.error('Invalid API response structure:', result);
-                setBranchData([]); // Set an empty array if the structure is invalid
-            }
-        } catch (error) {
-            console.error('Error fetching branch data:', error);
-            setBranchData([]); // Set an empty array in case of an error
-        }
+      if (result && result.data && Array.isArray(result.data.data)) {
+        setBranchData(result.data.data); // Extract the nested data array
+        console.log("Branch Data Set:", result.data.data); // Log the extracted data
+      } else {
+        console.error("Invalid API response structure:", result);
+        setBranchData([]); // Set an empty array if the structure is invalid
+      }
+    } catch (error) {
+      console.error("Error fetching branch data:", error);
+      setBranchData([]); // Set an empty array in case of an error
     }
   };
 
@@ -87,8 +81,3 @@ export default function BranchPage() {
     </>
   );
 }
-
-
-
-
-
