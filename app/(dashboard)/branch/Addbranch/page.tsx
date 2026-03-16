@@ -1,6 +1,6 @@
-"use client";
-import { Input } from "@/app/components/ui/Input/Input";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+'use client';
+import { Input } from '@/app/components/ui/Input/Input';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCodeBranch,
   faUser,

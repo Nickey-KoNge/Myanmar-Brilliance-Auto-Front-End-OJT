@@ -1,9 +1,9 @@
-import { Input } from "@/app/components/ui/Input/Input";
-import { faCalendar } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button } from "@/app/components/ui/Button/Button";
-import styles from "./Search.module.css";
-import React from "react";
+import { Input } from '@/app/components/ui/Input/Input'
+import { faCalendar } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Button } from '@/app/components/ui/Button/Button'
+import styles from './Search.module.css'
+import React from 'react'
 
 export default function SearchModal({ title }: { title: string }) {
   return (
@@ -44,5 +44,5 @@ export default function SearchModal({ title }: { title: string }) {
 
       <div className={styles.recent}></div>
     </div>
-  );
+  )
 }
