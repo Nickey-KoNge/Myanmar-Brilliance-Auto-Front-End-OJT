@@ -16,7 +16,9 @@
   --danger: #ff4d4f;
   --success: #38a539;
 
-  --radius: 8px;
+  --radius: 0.75rem;
+
+  --padding: 1rem;
 }
 
 /* Utilities */
@@ -27,19 +29,36 @@
   margin: 0.5rem 0;
 }
 
+.headerbarButton {
+  background: var(--accent);
+  color: var(--text-main);
+  font-weight: bold;
+  border-radius: var(--radius);
+  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  padding: 0 1rem;
+  transition: all 0.3s ease;
+}
+
+.headerbarButton:hover {
+  background-color: var(--danger);
+}
+
 /* Layout */
 .gridContainer {
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 1.5rem;
-  padding: 1rem;
 }
 
 .gridBox {
   background: var(--bg-main);
   padding: 1.5rem;
   border-radius: var(--radius);
-  min-height: 80vh;
+  min-height: max-content;
 }
 
 .spacer {
@@ -68,6 +87,7 @@
 .table th,
 .table td {
   padding: 1rem;
+  text-align: start;
 }
 
 .table thead {
@@ -274,8 +294,6 @@
 .filterRow select option {
   background-color: var(--bg-input);
   color: var(--text-main);
-  border-radius: 10px;
-  border: 1px solid red;
 }
 
 /* Prevent autofill background override */

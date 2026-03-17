@@ -4,9 +4,9 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
-  background-color: #252526; 
-  padding: 1rem 1.5rem; 
-  border-radius: 20px;
+  background-color: #252526;
+  padding: 1rem 1.5rem;
+  border-radius: 0.75rem;
 }
 
 .titleWrapper {
@@ -16,7 +16,7 @@
 }
 
 .titleIconWrapper {
-  background-color: #A33B3B;
+  background-color: #a33b3b;
   border-radius: 8px;
   width: 45px;
   height: 45px;

@@ -17,7 +17,7 @@ apiClient.interceptors.request.use((config) => {
 // ၂။ Response Interceptor
 apiClient.interceptors.response.use(
   (response) => {
-    return response;
+    return response.data.data;
   },
   async (error) => {
     const originalRequest = error.config;
