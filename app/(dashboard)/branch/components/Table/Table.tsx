@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styles from "./Table.module.css";
 import { useRouter } from "next/navigation";
 import DeleteModal from "../Delete/DeleteModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 interface TableRow {
   id: string;
@@ -83,7 +85,7 @@ export default function DynamicTable({
                       openDeleteModal(row.id, displayName);
                     }}
                   >
-                    🗑
+                    <FontAwesomeIcon icon={faTrash} />
                   </button>
                 </td>
               </tr>

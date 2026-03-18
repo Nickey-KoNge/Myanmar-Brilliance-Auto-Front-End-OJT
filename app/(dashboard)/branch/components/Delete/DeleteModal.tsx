@@ -95,10 +95,10 @@ export default function DeleteModal({
       <div className={styles.DeleteModal}>
         <div className={styles.iconContainer}>
           <div className={styles.iconOne}>
-            <FontAwesomeIcon icon={faWarning} color="red" size="xl" />
+            <FontAwesomeIcon icon={faWarning} color="red" size="2xl" />
           </div>
           <div className={styles.iconTwo}>
-            <FontAwesomeIcon icon={faCancel} />
+            <FontAwesomeIcon icon={faCancel}  onClick={onClose}  />
           </div>
         </div>
         <div className={styles.textContainer}>

@@ -20,6 +20,12 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "@/app/components/ui/Button/Button";
 import { PageHeader } from "@/app/components/ui/PageHeader/pageheader";
 import styles from "./page.module.css";
+import dynamic from 'next/dynamic';
+
+const MapPicker=dynamic(()=>import("../MapPicker/MapPicker"),{
+  ssr:false,
+})
+
 
 interface FormData {
   branches_name: string;
@@ -48,10 +54,12 @@ interface BranchFormProps {
 }
 
 export const BranchForm: React.FC<BranchFormProps> = ({ mode, initialData, onSubmit }) => {
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
+  const { register,setValue, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
     defaultValues: initialData || {company_id:""},
   });
   const [companies, setCompanies] = useState<Company[]>([]);
+
+
 
   // Reset form with initial data change  
   //   useEffect(() => {
@@ -92,6 +100,7 @@ export const BranchForm: React.FC<BranchFormProps> = ({ mode, initialData, onSub
                 color: "white",
                 border: "1px solid #333",
               }}
+              onClick={() => window.history.back()}
             >
               CANCEL
             </Button>
@@ -126,6 +135,7 @@ export const BranchForm: React.FC<BranchFormProps> = ({ mode, initialData, onSub
               <select
                 className={styles.select}
                 {...register("company_id")}
+              
                
               >
                 <option value="">All Company</option>
@@ -197,7 +207,8 @@ export const BranchForm: React.FC<BranchFormProps> = ({ mode, initialData, onSub
             </div>
 
             <div className={styles.mapPlaceholder}>
-              <FontAwesomeIcon icon={faMap} />
+              {/* <FontAwesomeIcon icon={faMap} /> */}
+              <MapPicker setValue={setValue}/>
             </div>
           </div>
 
@@ -245,7 +256,7 @@ export const BranchForm: React.FC<BranchFormProps> = ({ mode, initialData, onSub
               <Input
                 label=""
                 type="text"
-                placeholder="city"
+                placeholder="City"
                 icon={<FontAwesomeIcon icon={faCity} />}
                 {...register("city", { required: "City is required" })}
               />

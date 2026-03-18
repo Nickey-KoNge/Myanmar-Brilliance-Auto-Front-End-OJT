@@ -10,7 +10,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 400px;
+    width: 450px;
     text-align: center;
 }
 .iconContainer{
@@ -37,6 +37,7 @@ grid-row-gap: 0px;
     display: flex;
     flex-direction: row;
     gap: 1rem;
+    margin-top: 0.5rem;
 }
 
 .btnContainer button:first-child {
