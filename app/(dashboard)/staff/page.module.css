@@ -16,7 +16,7 @@
   --danger: #ff4d4f;
   --success: #38a539;
 
-  --radius: 0.75rem;
+  --radius: 0.5rem;
 
   --padding: 1rem;
 }
@@ -110,7 +110,8 @@
 }
 
 .staffInfo img {
-  border-radius: 50%;
+  border-radius: var(--radius);
+  object-fit: cover;
 }
 
 /* Actions */

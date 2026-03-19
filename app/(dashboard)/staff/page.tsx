@@ -30,17 +30,6 @@ const TABLE_HEADERS = [
   "Actions",
 ];
 
-const FILTERS = [
-  {
-    label: "Branch",
-    options: ["Yangon", "Mandalay", "Naypyidaw", "Bago"],
-  },
-  {
-    label: "Role",
-    options: ["Driver", "Cleaner", "Manager", "Accountant"],
-  },
-];
-
 interface Staff {
   id: string;
   staffName: string;
@@ -50,6 +39,16 @@ interface Staff {
   position: string;
   branches_name: string;
   phone: string;
+}
+
+interface Branch {
+  id: string;
+  branches_name: string;
+}
+
+interface Role {
+  id: string;
+  role_name: string;
 }
 
 export default function StaffPage() {
@@ -76,6 +75,25 @@ export default function StaffPage() {
     };
 
     fetchStaffs();
+  }, []);
+
+  // fetch branch
+  const [branches, setBranches] = useState<Branch[]>([]);
+  const [roles, setRoles] = useState<Role[]>([]);
+  useEffect(() => {
+    const fetchFilters = async () => {
+      try {
+        const branches = await apiClient.get("/master-company/branches");
+        const roles = await apiClient.get("/master-service/roles");
+        setBranches(branches.data);
+        setRoles(roles.data);
+        console.log(roles.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchFilters();
   }, []);
 
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -130,8 +148,8 @@ export default function StaffPage() {
                         <Image
                           src={staff.image || "/default-user.png"}
                           alt={staff.staffName}
-                          width={40}
-                          height={40}
+                          width={60}
+                          height={60}
                           unoptimized
                         />
 
@@ -213,25 +231,41 @@ export default function StaffPage() {
             </div>
 
             <div className={styles.filterRow}>
-              {FILTERS.map((filter) => (
-                <div key={filter.label} className={styles.field}>
-                  <label className={styles.label}>{filter.label}</label>
-                  <div className={styles.inputWrapper}>
-                    <select defaultValue="all">
-                      <option value="all">All {filter.label}s</option>
-                      {filter.options.map((opt) => (
-                        <option key={opt} value={opt.toLowerCase()}>
-                          {opt}
-                        </option>
-                      ))}
-                    </select>
-                    <FontAwesomeIcon
-                      icon={faCaretDown}
-                      className={styles.icon}
-                    />
-                  </div>
+              {/* Branches */}
+              <div className={styles.field}>
+                <label htmlFor="branches" className={styles.label}>
+                  Branch
+                </label>
+                <div className={styles.inputWrapper}>
+                  <select name="branch" id="branch" defaultValue="all">
+                    <option value="all">All Branches</option>
+                    {branches.map((branch) => (
+                      <option key={branch.id} value={branch.id}>
+                        {branch.branches_name}
+                      </option>
+                    ))}
+                  </select>
+                  <FontAwesomeIcon icon={faCaretDown} className={styles.icon} />
                 </div>
-              ))}
+              </div>
+
+              {/* Roles */}
+              <div className={styles.field}>
+                <label htmlFor="branches" className={styles.label}>
+                  Role
+                </label>
+                <div className={styles.inputWrapper}>
+                  <select name="role" id="role" defaultValue="all">
+                    <option value="all">All Roles</option>
+                    {roles.map((role) => (
+                      <option key={role.id} value={role.id}>
+                        {role.role_name}
+                      </option>
+                    ))}
+                  </select>
+                  <FontAwesomeIcon icon={faCaretDown} className={styles.icon} />
+                </div>
+              </div>
             </div>
 
             <div className={styles.btnBox}>
