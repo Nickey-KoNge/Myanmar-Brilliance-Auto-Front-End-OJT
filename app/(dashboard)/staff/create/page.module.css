@@ -1,14 +1,3 @@
-/* ====== THEME ====== */
-:root {
-  --bg-main: #252526;
-  --bg-input: #101010;
-  --text-main: #d1d1d1;
-  --text-muted: #5b5b5b;
-  --accent: #a33b3b;
-  --radius: 8px;
-  --gap: 1rem;
-}
-
 /* ====== LAYOUT ====== */
 .formGridContainer {
   display: grid;
@@ -168,12 +157,12 @@
 
 .btnSuccess {
   background: var(--accent);
-  color: var(--text-main);
+  color: var(--text-scuccess);
 }
 
 .btnCancel {
-  background: var(--bg-input);
-  color: var(--text-main);
+  background: var(--btn-cancel);
+  color: var(--text-cancel);
 }
 
 /* Span textarea to full width of the grid */

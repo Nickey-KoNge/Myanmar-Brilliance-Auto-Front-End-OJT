@@ -15,8 +15,7 @@
 /* TABLE CARD */
 
 .tableCard {
-  background: linear-gradient(180deg, #1d1e21, #18191c);
-  border-radius: 14px;
+  background: var(--bg-main);
   padding: 22px;
   border: 1px solid #2b2c30;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
@@ -30,36 +29,36 @@
   margin-bottom: 18px;
   font-weight: 600;
 }
-
-/* TABLE */
-
+/* Table */
 .table {
   width: 100%;
-  border-collapse: collapse;
+  border-spacing: 0;
+  background: var(--bg-table);
+  font-size: 14px;
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 
-.table th {
-  font-size: 12px;
-  color: #8c8c8c;
-  text-align: left;
-  padding: 14px 12px;
-  background: #24252a;
-}
-
+.table th,
 .table td {
-  padding: 14px 12px;
-  font-size: 13px;
-  border-top: 1px solid #2a2b2f;
-  color: #d8d8d8;
+  padding: 1rem;
+  text-align: start;
+  color: var(--text-main);
 }
 
-.table tbody tr {
-  transition: 0.2s ease;
+.table thead {
+  background: var(--bg-head);
+  color: var(--text-muted);
 }
 
-.table tbody tr:hover {
-  background: #222327;
+.table tr:nth-child(even) {
+  background: var(--bg-row-alt);
 }
+
+.table tr:hover {
+  background: var(--bg-row-hover);
+}
+
 
 /* COMPANY CELL */
 

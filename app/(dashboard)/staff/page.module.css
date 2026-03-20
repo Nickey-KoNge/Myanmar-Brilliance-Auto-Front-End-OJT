@@ -1,26 +1,3 @@
-:root {
-  --bg-main: #252526;
-  --bg-table: #2d2d30;
-  --bg-head: #3b3b41;
-  --bg-row-alt: #29292d;
-  --bg-row-hover: #404047;
-  --bg-input: #101010;
-  --bg-btn: #1a1a1b;
-
-  --border-input: #402626;
-
-  --text-main: #d1d1d1;
-  --text-muted: #5b5b5b;
-
-  --accent: #a33b3b;
-  --danger: #ff4d4f;
-  --success: #38a539;
-
-  --radius: 0.5rem;
-
-  --padding: 1rem;
-}
-
 /* Utilities */
 .cuttingLine {
   border: none;
@@ -31,7 +8,6 @@
 
 .headerbarButton {
   background: var(--accent);
-  color: var(--text-main);
   font-weight: bold;
   border-radius: var(--radius);
   display: inline-block;
@@ -69,6 +45,7 @@
 }
 
 .gridBoxTitle {
+  color: var(--text-main);
   text-align: center;
   margin-bottom: 1.5rem;
   font-weight: 600;
@@ -88,6 +65,7 @@
 .table td {
   padding: 1rem;
   text-align: start;
+  color: var(--text-main);
 }
 
 .table thead {
@@ -107,6 +85,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  color: var(--text-main);
 }
 
 .staffInfo img {
@@ -230,7 +209,7 @@
 
 .resetBtn {
   background: var(--accent);
-  color: var(--text-main);
+  color: inherit;
   border-radius: var(--radius);
   padding: 1rem;
   transition: all 0.3s ease;
@@ -256,6 +235,7 @@
 }
 
 .recentTitle {
+  color: var(--text-main);
   font-weight: bold;
 }
 
