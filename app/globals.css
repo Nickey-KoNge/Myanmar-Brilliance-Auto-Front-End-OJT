@@ -80,6 +80,7 @@ button {
 
   --radius: 0.5rem;
   --padding: 1rem;
+  --margin: 1rem;
 }
 .light-mode {
   --bg-layout: #ffffff;

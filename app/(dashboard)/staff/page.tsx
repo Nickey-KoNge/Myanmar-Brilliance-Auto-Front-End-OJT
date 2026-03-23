@@ -37,11 +37,14 @@ interface Staff {
   position: string;
   branches_name: string;
   phone: string;
+  status: string;
 }
 
 interface Branch {
   id: string;
   branches_name: string;
+  company_id: string;
+  company_name: string;
 }
 
 interface Role {
@@ -247,58 +250,37 @@ export default function StaffPage() {
           <hr className={styles.cuttingLine} />
 
           <div className={styles.searchContainer}>
-            <div className={styles.field}>
-              <label className={styles.label}>Searching</label>
-              <div className={styles.inputWrapper}>
-                <input type="text" placeholder="Search by name, email..." />
-              </div>
+            {/* Text Search Component */}
+            <TextSearch></TextSearch>
+
+            {/* Date Search Component */}
+            <div className={styles.filterRow}>
+              <DateInput label="From"></DateInput>
+              <DateInput label="To"></DateInput>
             </div>
 
             <div className={styles.filterRow}>
-              {["From", "To"].map((label) => (
-                <div key={label} className={styles.field}>
-                  <label className={styles.label}>{label}</label>
-                  <div className={styles.inputWrapper}>
-                    <input type="date" className={styles.dateSearch} />
-                    <FontAwesomeIcon
-                      icon={faCalendarDays}
-                      className={styles.icon}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
+              <DropdownInput
+                label="Branch"
+                options={branches.map((option) => ({
+                  id: option.id,
+                  name: option.branches_name,
+                }))}
+                valueKey="id"
+                nameKey="name"
+                defaultValue="all"
+              />
 
-            <div className={styles.filterRow}>
-              <div className={styles.field}>
-                <label className={styles.label}>Branch</label>
-                <div className={styles.inputWrapper}>
-                  <select defaultValue="all">
-                    <option value="all">All Branches</option>
-                    {branches.map((b) => (
-                      <option key={b.id} value={b.id}>
-                        {b.branches_name}
-                      </option>
-                    ))}
-                  </select>
-                  <FontAwesomeIcon icon={faCaretDown} className={styles.icon} />
-                </div>
-              </div>
-
-              <div className={styles.field}>
-                <label className={styles.label}>Role</label>
-                <div className={styles.inputWrapper}>
-                  <select defaultValue="all">
-                    <option value="all">All Roles</option>
-                    {roles.map((r) => (
-                      <option key={r.id} value={r.id}>
-                        {r.role_name}
-                      </option>
-                    ))}
-                  </select>
-                  <FontAwesomeIcon icon={faCaretDown} className={styles.icon} />
-                </div>
-              </div>
+              <DropdownInput
+                label="Role"
+                options={roles.map((option) => ({
+                  id: option.id,
+                  name: option.role_name,
+                }))}
+                valueKey="id"
+                nameKey="name"
+                defaultValue="all"
+              />
             </div>
 
             <div className={styles.btnBox}>

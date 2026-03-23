@@ -276,16 +276,3 @@
   background-color: var(--bg-input);
   color: var(--text-main);
 }
-
-/* Prevent autofill background override */
-.inputWrapper input:-webkit-autofill,
-.inputWrapper input:-webkit-autofill:hover,
-.inputWrapper input:-webkit-autofill:focus {
-  -webkit-text-fill-color: var(--text-main);
-  -webkit-box-shadow: 0 0 0px 1000px var(--bg-input) inset;
-  border-radius: var(--radius);
-}
-
-.inputWrapper select:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px var(--bg-input) inset;
-}

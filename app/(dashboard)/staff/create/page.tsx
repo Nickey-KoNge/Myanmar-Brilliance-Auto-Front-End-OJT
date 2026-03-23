@@ -1,5 +1,4 @@
 // app\(dashboard)\staff\create\page.tsx
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -27,6 +26,7 @@ import {
 import { PageHeader } from "@/app/components/ui/PageHeader/pageheader";
 import { Input } from "@/app/components/ui/Input/Input";
 import styles from "./page.module.css";
+import DropdownInput from "@/app/components/ui/SearchBoxes/DropdownInput";
 
 const GENDERS = ["Male", "Female"];
 
@@ -52,7 +52,7 @@ export default function CreateStaff() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [r, b, c] = await Promise.all([
+        const [roles, branches, companies] = await Promise.all([
           fetch("http://localhost:3001/master-service/roles").then((res) =>
             res.json(),
           ),
@@ -63,9 +63,9 @@ export default function CreateStaff() {
             res.json(),
           ),
         ]);
-        if (r.success) setRoles(r.data.data);
-        if (b.success) setBranches(b.data.data);
-        if (c.success) setCompanies(c.data.data);
+        if (roles.success) setRoles(roles.data.data);
+        if (branches.success) setBranches(branches.data.data);
+        if (companies.success) setCompanies(companies.data.data);
       } catch (err) {
         console.error("Fetch error:", err);
       }
@@ -160,26 +160,34 @@ export default function CreateStaff() {
 
           <div className={styles.filterContainer}>
             <div className={styles.filterItem}>
-              <label className={styles.inputLabel}>Role</label>
-              <div className={styles.inputWrapper}>
-                <select
-                  {...register("role", { required: "Role is required" })}
-                  defaultValue=""
-                >
-                  <option value="" disabled>
-                    Select Role
-                  </option>
-                  {roles.map((r) => (
-                    <option key={r.id} value={r.id}>
-                      {r.role_name}
-                    </option>
-                  ))}
-                </select>
-                <FontAwesomeIcon
-                  icon={faCaretDown}
-                  className={styles.inputIcon}
-                />
-              </div>
+              <DropdownInput
+                label="Role"
+                options={roles.map((option) => ({
+                  id: option.id,
+                  name: option.role_name,
+                }))}
+                valueKey="id"
+                nameKey="name"
+                defaultValue="all"
+              />
+              {errors.role && (
+                <p className={styles.errorMsg}>
+                  {errors.role.message as string}
+                </p>
+              )}
+            </div>
+
+            <div className={styles.filterItem}>
+              <DropdownInput
+                label="Branch"
+                options={branches.map((option) => ({
+                  id: option.id,
+                  name: option.branches_name,
+                }))}
+                valueKey="id"
+                nameKey="name"
+                defaultValue="all"
+              />
               {errors.role && (
                 <p className={styles.errorMsg}>
                   {errors.role.message as string}
