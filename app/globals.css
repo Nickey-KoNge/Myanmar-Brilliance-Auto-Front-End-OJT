@@ -91,7 +91,7 @@ button {
   --color-primary-hover: #962e32;
   --text-main: #000000;
   --text-cancel: #eeecec;
-  --icon-main: #000000;
+  /* --icon-main: #000000; */
   --text-muted: #131313;
   --border-color: #cccccc;
   --togglediv-color: #c4c4c4;
