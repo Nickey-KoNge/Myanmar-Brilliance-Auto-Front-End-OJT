@@ -7,15 +7,15 @@ import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarDays,
-  // faCaretDown,
+  faCheck,
   faClockRotateLeft,
   faPlus,
   faTrashCan,
   faUser,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 // Components
-import { Button } from "@/app/components/ui/Button/Button";
 import { PageHeader } from "@/app/components/ui/PageHeader/pageheader";
 import { DataTable } from "@/app/components/ui/DataTable/DataTable";
 //pagination components
@@ -33,6 +33,7 @@ import DropdownInput from "@/app/components/ui/SearchBoxes/DropdownInput";
 
 // Hook
 import { useFilters, FilterState } from "@/app/hooks/userFilters";
+import CustomBtn from "@/app/components/ui/Button/CustomBtn";
 interface Staff {
   id: string;
   staffName: string;
@@ -269,10 +270,15 @@ export default function StaffPage() {
 
   const renderLiveButtonArea = (
     <div className={styles.headerActionArea}>
-      <Link href="/staff/create" className={styles.headerbarButton}>
-        <FontAwesomeIcon icon={faPlus} />
-        ADD STAFF
-      </Link>
+      <CustomBtn variant="action" leftIcon={faPlus}>
+        <Link href="/staff/create">ADD STAFF</Link>
+      </CustomBtn>
+      <CustomBtn variant="success" leftIcon={faCheck}>
+        <Link href="/staff/create">SUCCESS</Link>
+      </CustomBtn>
+      <CustomBtn variant="cancel" leftIcon={faXmark}>
+        <Link href="/staff/create">CANCEL</Link>
+      </CustomBtn>
     </div>
   );
 
@@ -342,11 +348,7 @@ export default function StaffPage() {
                 />
               </div>
 
-              <div className={styles.btnBox}>
-                <Button className={styles.resetBtn} onClick={resetFilters}>
-                  Reset Filters
-                </Button>
-              </div>
+              <div className={styles.btnBox}></div>
 
               <hr className={styles.cuttingLine} />
 

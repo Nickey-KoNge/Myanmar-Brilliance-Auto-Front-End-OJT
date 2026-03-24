@@ -75,6 +75,7 @@ export default function EditStaff() {
 
         if (staffRes.success) {
           setStaffData(staffRes.data);
+          console.log(staffRes.data);
           if (staffRes.data.image) setPreview(staffRes.data.image);
         }
       } catch (err) {
@@ -87,9 +88,6 @@ export default function EditStaff() {
     fetchData();
   }, [id]);
 
-  // Step 2: Reset form ONLY after both options AND staff data are ready.
-  // This ensures <option> elements exist in the DOM when `reset()` sets values,
-  // which is what makes the <select> display the correct selected item.
   useEffect(() => {
     if (
       !staffData ||
@@ -97,7 +95,7 @@ export default function EditStaff() {
       branches.length === 0 ||
       companies.length === 0
     ) {
-      return; // Wait until everything is loaded
+      return; 
     }
 
     const s = staffData;

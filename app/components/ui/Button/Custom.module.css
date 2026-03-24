@@ -1,0 +1,69 @@
+.btn {
+  width: 100%;
+  padding: 0.775rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  gap: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Variants */
+.actionBtn {
+  background-color: var(--accent);
+  color: var(--btn-text);
+}
+
+.actionBtn:hover {
+  background-color: var(--accent-hover);
+}
+
+.successBtn {
+  background-color: var(--success);
+  color: white;
+}
+
+.successBtn:hover {
+  background-color: var(--success-hover);
+}
+
+.cancelBtn {
+  background-color: var(--bg-btn);
+  color: var(--btn-text);
+}
+
+.cancelBtn:hover {
+  background-color: var(--togglediv-color);
+}
+
+/* Icons */
+.iconLeft,
+.iconRight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconLeft svg,
+.iconRight svg {
+  width: 1em;
+  height: 1em;
+}
+
+/* Label */
+.label {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Disabled */
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
