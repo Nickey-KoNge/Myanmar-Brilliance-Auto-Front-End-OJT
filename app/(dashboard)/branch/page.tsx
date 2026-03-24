@@ -2,21 +2,29 @@
 import { PageHeader } from "@/app/components/ui/PageHeader/pageheader";
 import {
   faAdd,
+  faCalendarDays,
+  faClockRotateLeft,
   faCodeBranch, 
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@/app/components/ui/Button/Button";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
-import TableSearchLayout from "./TableSearchLayout";
-import SearchModal from "./components/Search/SearchModal";
+
 
 import { useRouter } from "next/navigation";
 import { DataTable } from "@/app/components/ui/DataTable/DataTable";
 import { apiClient } from "@/app/features/lib/api-client";
 import styles from "./page.module.css";
 import DeleteModal from "../../components/ui/Delete/DeleteModal";
+import { Pagination } from "@/app/components/ui/Pagination/Pagination";
+import TextInput from "@/app/components/ui/SearchBoxes/TextInput";
+import DateInput from "@/app/components/ui/SearchBoxes/DateInput";
+import { FilterState, useFilters } from "@/app/hooks/userFilters";
+import { set } from "react-hook-form";
+import { PageGridLayout } from "@/app/components/layout/PageGridLayout/PageGridLayout";
+
 interface Branch{
   id:string;
   branches_name:string;
@@ -35,7 +43,41 @@ export default function BranchPage() {
     const [isDeleteOpen, setIsDeleteOpen] = React.useState(false);
 const [selectedBranch, setSelectedBranch] = React.useState<Branch | null>(null);
 
-  const hasFetched=React.useRef(false);
+  const [currentPage,setCurrentPage]=useState(1);
+  const [totalPages,setTotalPages]=useState(1);
+  const [totalRecords,setTotalRecords]=useState(0);
+  const PAGE_SIZE=10;
+
+
+  //Active Filters State
+  const [activeFilters, setActiveFilters] = useState<FilterState>({
+    search: "",
+    startDate: "",
+    endDate: "",
+  
+  });
+
+   // Custom Hook
+    const { filters, updateFilter, resetFilters } = useFilters(
+      { search: "", startDate: "", endDate: ""},
+      (debouncedFilters: FilterState) => {
+      const isFilterChanged =
+  activeFilters.search !== debouncedFilters.search ||
+  activeFilters.startDate !== debouncedFilters.startDate ||
+  activeFilters.endDate !== debouncedFilters.endDate;
+  
+        setActiveFilters(debouncedFilters);
+  
+        if (isFilterChanged) {
+          setCurrentPage(1);
+        }
+      },
+    );
+
+
+
+
+
 
   const columns=[
     {
@@ -72,12 +114,50 @@ const [selectedBranch, setSelectedBranch] = React.useState<Branch | null>(null);
 
   const fetchBranchData = async () => {
     try {
-      const response=await apiClient.get("/master-company/branches")
+      const params:Record<string,string>={
+        page:currentPage.toString(),
+        limit:PAGE_SIZE.toString(),
+      }
+      // const response=await apiClient.get("/master-company/branches")
+      if(activeFilters.search) params.search=activeFilters.search;
+      if(activeFilters.startDate) params.startDate=activeFilters.startDate;
+      if(activeFilters.endDate) params.endDate=activeFilters.endDate;
+      const queryString=new URLSearchParams(params).toString();
+      const response=await apiClient.get(`/master-company/branches?${queryString}`);
+      
+   const res = response as unknown as {
+          data?:
+            | Branch[]
+            | { data?: Branch[]; total?: number; totalPages?: number };
+          total?: number;
+          totalPages?: number;
+        };
+      let branchList:Branch[]=[];
+      let total=0;
+      let totalPages=1;
 
-      setBranchData(response.data);
+      if(res && typeof res=== "object"){
+        if(Array.isArray(res.data)){
+          branchList=res.data;
+          total=res.total || 0;
+          totalPages=res.totalPages || 1; 
+        }else if (
+          res.data && typeof res.data === "object" && Array.isArray(res.data.data)
+        ){
+            branchList=res.data.data;
+            total=res.data.total || 0;
+            totalPages=res.data.totalPages || 1;
+          }
+       
+      }
+
+      setBranchData(branchList);
+      setTotalRecords(total);
+      setTotalPages(totalPages);
 
     }catch(error){
       console.error("Failed to fetch branch:",error)
+      setBranchData([]);
     }
     
 
@@ -85,13 +165,9 @@ const [selectedBranch, setSelectedBranch] = React.useState<Branch | null>(null);
 
 
 
-  useEffect(() => {
-    if(hasFetched.current) return;
-    hasFetched.current=true;
-    fetchBranchData();
-  }, []);
-
-
+useEffect(() => {
+  fetchBranchData();
+}, [currentPage, activeFilters]);
 
 
 
@@ -114,8 +190,11 @@ const [selectedBranch, setSelectedBranch] = React.useState<Branch | null>(null);
     </div>
   );
 
+
+
   return (
     <>
+    
       <PageHeader
         titleData={{
           icon: <FontAwesomeIcon icon={faCodeBranch} />,
@@ -123,12 +202,90 @@ const [selectedBranch, setSelectedBranch] = React.useState<Branch | null>(null);
         }}
         actionNode={renderLiveButtonArea}
       />
+      <PageGridLayout
+      sidebar={ 
+         <>
 
-      <TableSearchLayout
-        // table={<DynamicTable data={branchData} title="Branch" onDeleteSuccess={handleDeleteSuccess} />}
-        table={<DataTable data={branchData} columns={columns} onRowClick={(branch)=>router.push(`/branch/Updatebranch/${branch.id}`)}/>}
-        search={<SearchModal title="Branch" />}
-      />
+          <p className={styles.gridBoxTitle}>Branch Search</p>
+          <hr className={styles.cuttingLine} />
+
+          <div className={styles.searchContainer}>
+            {/* Text Search Component */}
+            <TextInput
+              label="Searching"
+              placeholder="Search by name, email..."
+              value={filters.search}
+              onChange={(e) => updateFilter("search", e.target.value)}
+            />
+
+            {/* Date Search Component */}
+            <div className={styles.filterRow}>
+              <div className={styles.filterRow}>
+                <DateInput
+                  label="From"
+                  value={filters.startDate}
+                  onChange={(e) => updateFilter("startDate", e.target.value)}
+                  rightIcon={faCalendarDays}
+                />
+              </div>
+
+              <DateInput
+                label="To"
+                value={filters.endDate}
+                onChange={(e) => updateFilter("endDate", e.target.value)}
+                rightIcon={faCalendarDays}
+              />
+            </div>
+
+        
+
+            <div className={styles.btnBox}>
+              <Button className={styles.resetBtn} onClick={resetFilters}>
+                Reset Filters
+              </Button>
+            </div>
+
+            <hr className={styles.cuttingLine} />
+
+            <div className={styles.recentRecord}>
+              <span>
+                {" "}
+                <FontAwesomeIcon icon={faClockRotateLeft} />
+              </span>
+              <p className={styles.recentTitle}>RECENT RECORD</p>
+              <span />
+              <div className={styles.stat}>
+                <div>
+                  <p className={styles.statLable}>Total Staff :</p>
+                  <p className={styles.textDanger}>{totalRecords}</p>
+                </div>
+                <div>
+                  {" "}
+                  <p className={styles.statLable}>Active Staff :</p>
+                  <p className={styles.textSuccess}>36</p>{" "}
+                </div>{" "}
+                <div>
+                  <p className={styles.statLable}>Inactive Staff :</p>
+                  <p className={styles.textDanger}>4</p>{" "}
+                </div>{" "}
+              </div>{" "}
+            </div>
+
+            <hr className={styles.cuttingLine} />
+            <p className={styles.lastEdited}>
+              Last Edited :{" "}
+              <span className={styles.spanText}>Nickey (Admin)</span>
+            </p>
+          </div>
+     </>
+
+      } 
+      >
+        <div>
+            <p className={styles.gridBoxTitle}>BRANCHES MASTER RECORDS</p>
+              
+
+      <DataTable data={branchData} columns={columns} onRowClick={(branch)=>router.push(`/branch/Updatebranch/${branch.id}`)}/>
       {isDeleteOpen && selectedBranch && (
       <DeleteModal
     isOpen={isDeleteOpen}
@@ -141,8 +298,21 @@ const [selectedBranch, setSelectedBranch] = React.useState<Branch | null>(null);
   />
 )}
 
+          </div>
 
-      
+          
+ 
+  <Pagination
+  currentPage={currentPage}
+  totalPages={totalPages}
+  totalRecords={totalRecords}
+  pageSize={PAGE_SIZE}
+  onPageChange={(page)=>setCurrentPage(page)}/>
+
+
+    
+
+      </PageGridLayout>
     </>
   );
 }

@@ -21,6 +21,7 @@ import { Button } from "@/app/components/ui/Button/Button";
 import { PageHeader } from "@/app/components/ui/PageHeader/pageheader";
 import styles from "./page.module.css";
 import dynamic from 'next/dynamic';
+import DropdownInput from '@/app/components/ui/SearchBoxes/DropdownInput';
 
 const MapPicker=dynamic(()=>import("../../../../components/ui/MapPicker/MapPicker"),{
   ssr:false,
@@ -132,8 +133,8 @@ export const BranchForm: React.FC<BranchFormProps> = ({ mode, initialData, onSub
             </div>
 
             <div className={styles.fieldGroup}>
-              <label className={styles.fieldLabel}>Company</label>
-              <select
+              {/* <label className={styles.fieldLabel} style={{marginBottom:'1rem'}}>Company</label> */}
+              {/* <select
                 className={styles.select}
                 {...register("company_id")}>
               
@@ -143,7 +144,14 @@ export const BranchForm: React.FC<BranchFormProps> = ({ mode, initialData, onSub
                     {c.company_name}
                   </option>
                 ))}
-              </select>
+              </select> */}
+              <DropdownInput
+                label='Company'
+                placeholder="Select Company"
+                options={companies.map((c) => ({ id: c.id, name: c.company_name }))}
+                {...register("company_id")}
+                
+              />
             </div>
           </div>
 
@@ -175,6 +183,7 @@ export const BranchForm: React.FC<BranchFormProps> = ({ mode, initialData, onSub
               <div className={styles.fieldGroup}>
                 <label className={styles.fieldLabel}>GPS Location</label>
                 <Input
+                readOnly
                   label=""
                   type="text"
                   placeholder="Enter Your GPS Location..."
