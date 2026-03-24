@@ -16,6 +16,9 @@ import { Button } from "@/app/components/ui/Button/Button";
 import { Checkbox } from "@/app/components/ui/Checkbox/Checkbox";
 import { useRouter } from "next/navigation";
 
+import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+import { useTheme } from "@/app/core/providers/ThemeProvider";
+
 type LoginInputs = {
   email: string;
   password: string;
@@ -29,6 +32,7 @@ export const LoginForm = () => {
     formState: { errors },
   } = useForm<LoginInputs>();
   const router = useRouter();
+  const { isLight, toggleTheme } = useTheme();
 
   // Login status နှင့် error များကိုပြရန် state များ
   const [isLoading, setIsLoading] = useState(false);
@@ -77,6 +81,18 @@ export const LoginForm = () => {
 
   return (
     <div className={styles.card}>
+      <div className={styles.togglediv}>
+        <button
+          className={styles.themeToggle}
+          aria-label="Toggle Theme"
+          onClick={toggleTheme}
+        >
+          <FontAwesomeIcon
+            icon={isLight ? faMoon : faSun}
+            className={styles.toggleIcon}
+          />
+        </button>
+      </div>
       <div className={styles.logoContainer}>
         <svg
           className={styles.logoIcon}
@@ -148,7 +164,8 @@ export const LoginForm = () => {
           // icon={}
           disabled={isLoading}
         >
-          {isLoading ? "SIGNING IN..." : "SIGN IN"} <FontAwesomeIcon icon={faChargingStation} />
+          {isLoading ? "SIGNING IN..." : "SIGN IN"}{" "}
+          <FontAwesomeIcon icon={faChargingStation} />
         </Button>
       </form>
 

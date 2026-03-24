@@ -6,32 +6,3 @@
   position: relative;
   padding: 1rem;
 }
-.togglediv {
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-
-  background-color: var(--togglediv-color);
-  border-radius: 10px;
-  width: 100px;
-  height: 50px;
-}
-.themeToggle {
-  position: absolute;
-  top: .8rem;
-  right: 2rem;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.3s ease;
-}
-
-.themeToggle:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}

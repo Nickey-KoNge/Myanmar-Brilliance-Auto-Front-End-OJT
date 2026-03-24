@@ -1,4 +1,5 @@
 .card {
+  position: relative;
   background-color: var(--bg-card);
   width: 100%;
   max-width: 420px;
@@ -38,7 +39,7 @@
 
 .title span {
   color: var(--color-primary);
-  font-weight: var( --font-weight-bolder);
+  font-weight: var(--font-weight-bolder);
 }
 
 .optionsRow {
@@ -62,7 +63,7 @@
 .divider {
   width: 100%;
   border: none;
-  border-top: 1px solid #402626; 
+  border-top: 1px solid #402626;
   margin: 2rem 0 1.5rem 0;
 }
 
@@ -75,4 +76,38 @@
   align-items: center;
   justify-content: center;
   gap: 0.3rem;
+}
+
+.togglediv {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.themeToggle {
+  background-color: transparent;
+  border: 1px solid #402626;
+  color: var(--color-primary, inherit);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.themeToggle:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  transform: scale(1.1) rotate(15deg);
+  border-color: var(--color-primary);
+}
+
+.toggleIcon {
+  font-size: 1rem;
 }
