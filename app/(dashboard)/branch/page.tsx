@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@/app/components/ui/Button/Button";
-import { useEffect, useState } from "react";
+import { useEffect, useState,} from "react";
 import React from "react";
 
 import { useRouter } from "next/navigation";
@@ -173,6 +173,8 @@ export default function BranchPage() {
     </div>
   );
 
+
+
   return (
     <>
       <PageHeader
@@ -279,16 +281,32 @@ export default function BranchPage() {
         />
       </PageGridLayout>
       {isDeleteOpen && selectedBranch && (
-        <DeleteModal
-          isOpen={isDeleteOpen}
-          onClose={() => setIsDeleteOpen(false)}
-          itemName={selectedBranch.branches_name}
-          name="Branch"
-          id={selectedBranch.id}
-          apiRoute="master-company/branches"
-          onDeleteSuccess={handleDeleteSuccess}
-        />
-      )}
+      <DeleteModal
+    isOpen={isDeleteOpen}
+    onClose={() => setIsDeleteOpen(false)}
+    itemName={selectedBranch.branches_name}
+    name="Branch"
+    id={selectedBranch.id}
+    apiRoute="master-company/branches"
+    onDeleteSuccess={handleDeleteSuccess}
+  />
+)}
+
+          </div>
+
+          
+ 
+  <Pagination
+  currentPage={currentPage}
+  totalPages={totalPages}
+  totalRecords={totalRecords}
+  pageSize={PAGE_SIZE}
+  onPageChange={(page)=>setCurrentPage(page)}/>
+
+
+    
+
+      </PageGridLayout>
     </>
   );
 }
