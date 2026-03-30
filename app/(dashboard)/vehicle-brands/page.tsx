@@ -59,11 +59,24 @@ interface Role {
   role_name: string;
 }
 
+interface VehicleBrand {
+  id: string;
+  vehicle_brand_name: string;
+  country_of_origin: string;
+  manufacturer: string;
+  image: string;
+  description: string;
+  status: string;
+}
+
 export default function VehicleBrandsPage() {
   const router = useRouter();
-  const [staffs, setStaffs] = useState<Staff[]>([]);
-  const [branches, setBranches] = useState<Branch[]>([]);
-  const [roles, setRoles] = useState<Role[]>([]);
+  // const [staffs, setStaffs] = useState<Staff[]>([]);
+  // const [branches, setBranches] = useState<Branch[]>([]);
+  // const [roles, setRoles] = useState<Role[]>([]);
+
+  const [vehicleBrands, setVehicleBrands] = useState<VehicleBrand[]>([]);
+
   const [deleteModal, setDeleteModal] = useState<{
     isOpen: boolean;
     id: string | null;
@@ -108,8 +121,85 @@ export default function VehicleBrandsPage() {
     },
   );
   // Fetch Staff Data
+  // useEffect(() => {
+  //   const fetchStaffs = async () => {
+  //     try {
+  //       const params: Record<string, string> = {
+  //         page: currentPage.toString(),
+  //         limit: PAGE_SIZE.toString(),
+  //       };
+
+  //       if (activeFilters.search)
+  //         params.search = activeFilters.search as string;
+  //       if (activeFilters.startDate)
+  //         params.startDate = activeFilters.startDate as string;
+  //       if (activeFilters.endDate)
+  //         params.endDate = activeFilters.endDate as string;
+
+  //       if (
+  //         activeFilters.branchId &&
+  //         activeFilters.branchId !== "all" &&
+  //         activeFilters.branchId !== ""
+  //       ) {
+  //         params.branches_id = activeFilters.branchId as string;
+  //       }
+
+  //       if (
+  //         activeFilters.roleId &&
+  //         activeFilters.roleId !== "all" &&
+  //         activeFilters.roleId !== ""
+  //       ) {
+  //         params.role_id = activeFilters.roleId as string;
+  //       }
+
+  //       const queryString = new URLSearchParams(params).toString();
+
+  //       const response = await apiClient.get(
+  //         `/master-company/staff?${queryString}`,
+  //       );
+
+  //       const res = response as unknown as {
+  //         data?:
+  //           | Staff[]
+  //           | { data?: Staff[]; total?: number; totalPages?: number };
+  //         total?: number;
+  //         totalPages?: number;
+  //       };
+
+  //       let staffList: Staff[] = [];
+  //       let total = 0;
+  //       let totalPages = 1;
+
+  //       if (res && typeof res === "object") {
+  //         if (Array.isArray(res.data)) {
+  //           staffList = res.data;
+  //           total = res.total || 0;
+  //           totalPages = res.totalPages || 1;
+  //         } else if (
+  //           res.data &&
+  //           typeof res.data === "object" &&
+  //           Array.isArray(res.data.data)
+  //         ) {
+  //           staffList = res.data.data;
+  //           total = res.data.total || 0;
+  //           totalPages = res.data.totalPages || 1;
+  //         }
+  //       }
+
+  //       setStaffs(staffList);
+  //       setTotalRecords(total);
+  //       setTotalPages(totalPages);
+  //     } catch (error) {
+  //       console.error("Failed to fetch staff:", error);
+  //       setStaffs([]);
+  //     }
+  //   };
+  //   fetchStaffs();
+  // }, [currentPage, activeFilters]);
+
+  // fetch Vehicle Brand Data
   useEffect(() => {
-    const fetchStaffs = async () => {
+    const fetchVehicleBrands = async () => {
       try {
         const params: Record<string, string> = {
           page: currentPage.toString(),
@@ -123,83 +213,70 @@ export default function VehicleBrandsPage() {
         if (activeFilters.endDate)
           params.endDate = activeFilters.endDate as string;
 
-        if (
-          activeFilters.branchId &&
-          activeFilters.branchId !== "all" &&
-          activeFilters.branchId !== ""
-        ) {
-          params.branches_id = activeFilters.branchId as string;
-        }
-
-        if (
-          activeFilters.roleId &&
-          activeFilters.roleId !== "all" &&
-          activeFilters.roleId !== ""
-        ) {
-          params.role_id = activeFilters.roleId as string;
-        }
-
         const queryString = new URLSearchParams(params).toString();
 
         const response = await apiClient.get(
-          `/master-company/staff?${queryString}`,
+          `/master-vehicle/vehicle-brands?${queryString}`,
         );
 
         const res = response as unknown as {
           data?:
-            | Staff[]
-            | { data?: Staff[]; total?: number; totalPages?: number };
+            | VehicleBrand[]
+            | { data?: VehicleBrand[]; total?: number; totalPages?: number };
           total?: number;
           totalPages?: number;
         };
 
-        let staffList: Staff[] = [];
+        let vehicleBrandList: VehicleBrand[] = [];
         let total = 0;
         let totalPages = 1;
 
         if (res && typeof res === "object") {
-          if (Array.isArray(res.data)) {
-            staffList = res.data;
+          console.log(res.data);
+
+          // if (Array.isArray(res.data)) {
+          if (Array.isArray(res)) {
+            vehicleBrandList = res;
             total = res.total || 0;
             totalPages = res.totalPages || 1;
           } else if (
             res.data &&
             typeof res.data === "object" &&
-            Array.isArray(res.data.data)
+            Array.isArray(res)
           ) {
-            staffList = res.data.data;
-            total = res.data.total || 0;
-            totalPages = res.data.totalPages || 1;
+            vehicleBrandList = res;
+            total = res.total || 0;
+            totalPages = res.totalPages || 1;
           }
         }
 
-        setStaffs(staffList);
+        setVehicleBrands(vehicleBrandList);
         setTotalRecords(total);
         setTotalPages(totalPages);
       } catch (error) {
-        console.error("Failed to fetch staff:", error);
-        setStaffs([]);
+        console.error("Failed to fetch vehicle brands:", error);
+        setVehicleBrands([]);
       }
     };
-    fetchStaffs();
+    fetchVehicleBrands();
   }, [currentPage, activeFilters]);
 
   // Fetch Filters (Branches/Roles)
-  useEffect(() => {
-    const fetchFilters = async () => {
-      try {
-        const [branchesRes, rolesRes] = await Promise.all([
-          apiClient.get("/master-company/branches"),
-          apiClient.get("/master-service/roles"),
-        ]);
-        setBranches(branchesRes.data);
-        setRoles(rolesRes.data);
-      } catch (error) {
-        console.error("Failed to fetch filters:", error);
-      }
-    };
-    fetchFilters();
-  }, []);
+  // useEffect(() => {
+  //   const fetchFilters = async () => {
+  //     try {
+  //       const [branchesRes, rolesRes] = await Promise.all([
+  //         apiClient.get("/master-company/branches"),
+  //         apiClient.get("/master-service/roles"),
+  //       ]);
+  //       setBranches(branchesRes.data);
+  //       setRoles(rolesRes.data);
+  //     } catch (error) {
+  //       console.error("Failed to fetch filters:", error);
+  //     }
+  //   };
+  //   fetchFilters();
+  // }, []);
 
   const openDeleteModal = (id: string, name: string) => {
     setDeleteModal({
@@ -209,47 +286,82 @@ export default function VehicleBrandsPage() {
     });
   };
   const handleDeleteSuccess = (id: string) => {
-    setStaffs((prev) => prev.filter((s) => s.id !== id));
+    // setStaffs((prev) => prev.filter((s) => s.id !== id));
+    setVehicleBrands((prev) => prev.filter((v) => v.id !== id));
   };
 
   const columns = [
+    // {
+    //   header: "Staff Info",
+    //   key: "staffName",
+    //   render: (staff: Staff) => (
+    //     <div className={styles.staffInfo}>
+    //       <Image
+    //         src={staff.image || "/default-user.png"}
+    //         alt={staff.staffName}
+    //         width={40}
+    //         height={40}
+    //         unoptimized
+    //         className={styles.staffImg}
+    //       />
+    //       {staff.staffName}
+    //     </div>
+    //   ),
+    // },
+    // { header: "Email", key: "email" },
+    // {
+    //   header: "Address",
+    //   key: "address",
+    //   render: (staff: Staff) => {
+    //     return staff.fullAddress ? staff.fullAddress : "-";
+    //   },
+    // },
+    // { header: "Role", key: "role_name" },
+    // { header: "Branch", key: "branches_name" },
+    // { header: "Phone", key: "phone" },
+    // {
+    //   header: "Actions",
+    //   key: "actions",
+    //   render: (staff: Staff) => (
+    //     <button
+    //       className={styles.deleteBtn}
+    //       onClick={(e) => {
+    //         e.stopPropagation();
+    //         openDeleteModal(staff.id, staff.staffName);
+    //       }}
+    //     >
+    //       <FontAwesomeIcon icon={faTrashCan} />
+    //     </button>
+    //   ),
+    // },
     {
-      header: "Staff Info",
-      key: "staffName",
-      render: (staff: Staff) => (
+      header: "Vehicle Brand Info",
+      key: "vehicle_brand_name",
+      render: (vehicleBrand: VehicleBrand) => (
         <div className={styles.staffInfo}>
           <Image
-            src={staff.image || "/default-user.png"}
-            alt={staff.staffName}
+            src={vehicleBrand.image || "/default-user.png"}
+            alt={vehicleBrand.vehicle_brand_name}
             width={40}
             height={40}
             unoptimized
             className={styles.staffImg}
           />
-          {staff.staffName}
+          {vehicleBrand.vehicle_brand_name}
         </div>
       ),
     },
-    { header: "Email", key: "email" },
-    {
-      header: "Address",
-      key: "address",
-      render: (staff: Staff) => {
-        return staff.fullAddress ? staff.fullAddress : "-";
-      },
-    },
-    { header: "Role", key: "role_name" },
-    { header: "Branch", key: "branches_name" },
-    { header: "Phone", key: "phone" },
+    { header: "Country", key: "country_of_origin" },
+    { header: "Manufacturer", key: "manufacturer" },
     {
       header: "Actions",
       key: "actions",
-      render: (staff: Staff) => (
+      render: (vehicleBrand: VehicleBrand) => (
         <button
           className={styles.deleteBtn}
           onClick={(e) => {
             e.stopPropagation();
-            openDeleteModal(staff.id, staff.staffName);
+            openDeleteModal(vehicleBrand.id, vehicleBrand.vehicle_brand_name);
           }}
         >
           <FontAwesomeIcon icon={faTrashCan} />
@@ -306,7 +418,7 @@ export default function VehicleBrandsPage() {
                   />
                 </div>
 
-                <div className={styles.filterRow}>
+                {/* <div className={styles.filterRow}>
                   <DropdownInput
                     label="Branch"
                     options={branches.map((b) => ({
@@ -332,7 +444,7 @@ export default function VehicleBrandsPage() {
                     onChange={(e) => updateFilter("roleId", e.target.value)}
                     placeholder="All Roles"
                   />
-                </div>
+                </div> */}
 
                 <div style={{ alignSelf: "flex-start" }}>
                   <ActionBtn
@@ -384,14 +496,23 @@ export default function VehicleBrandsPage() {
       >
         <div>
           <p className={styles.gridBoxTitle}>VEHICLE BRANDS MASTER RECORDS</p>
-          <DataTable
+          {/* <DataTable
             columns={columns}
             data={staffs}
             onRowClick={(staff) =>
               router.push(`/staff/Updatestaff/${staff.id}`)
             }
             emptyMessage="No staff records found."
-          />
+          /> */}
+
+          <DataTable
+            columns={columns}
+            data={vehicleBrands}
+            onRowClick={(vehicleBrand) =>
+              router.push(`/vehicle-brands/Updatestaff/${vehicleBrand.id}`)
+            }
+            emptyMessage="No staff records found."
+          ></DataTable>
         </div>
 
         <Pagination
@@ -408,9 +529,9 @@ export default function VehicleBrandsPage() {
           isOpen={deleteModal.isOpen}
           onClose={() => setDeleteModal({ isOpen: false, id: null, name: "" })}
           itemName={deleteModal.name}
-          name="staff"
+          name="vehicle-brand"
           id={deleteModal.id}
-          apiRoute="master-company/staff"
+          apiRoute="master-vehicle/vehicle-brands"
           onDeleteSuccess={handleDeleteSuccess}
         />
       )}
