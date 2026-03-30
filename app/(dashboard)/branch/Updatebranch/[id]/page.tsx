@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { BranchForm } from "../../components/BranchForm/BranchForm";
 import { useParams, useRouter } from "next/navigation";
 import { apiClient } from "@/app/features/lib/api-client";
+
 interface BranchFormData {
   branches_name: string;
   gps_location: string;
@@ -27,6 +28,9 @@ export default function UpdateBranch() {
     undefined,
   );
 
+
+  const [companies, setCompanies] = useState<any[]>([]);
+
   useEffect(() => {
     const fetchBranchData = async () => {
       try {
@@ -42,6 +46,7 @@ export default function UpdateBranch() {
             ...typedData,
             company_id: typedData.company_id || "",
           };
+
           setBranchData(formattedData);
         }
       } catch (error) {
@@ -54,24 +59,48 @@ export default function UpdateBranch() {
     }
   }, [branchId]);
 
-  const handleUpdate = async (data: BranchFormData) => {
+ 
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      try {
+        const res = await apiClient.get("/master-company/company");
+
+        const raw = (res as any).data || res;
+
+        setCompanies(raw);
+      } catch (error) {
+        console.error("Error fetching companies:", error);
+      }
+    };
+
+    fetchCompanies();
+  }, []);
+
+
+  console.log("companies in Update Branch Page:", companies);
+
+  const handleUpdate = async (data: Record<string, any>) => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { id, company, staff, stations, ...filteredData } = data;
 
       const payload: Partial<BranchFormData> = { ...filteredData };
+
       if (!payload.company_id) {
         delete payload.company_id;
       }
 
-      await apiClient.patch(`/master-company/branches/${branchId}`, payload);
+      await apiClient.patch(
+        `/master-company/branches/${branchId}`,
+        payload,
+      );
 
-      console.log("Branch updated successfully");
       router.push("/branch");
     } catch (error) {
       console.error("Error updating branch:", error);
     }
   };
+
+  console.log("Branch Data in Update Branch Page:", branchData);
 
   return !branchData ? (
     <div>Loading...</div>
@@ -80,6 +109,18 @@ export default function UpdateBranch() {
       mode="update"
       initialData={branchData}
       onSubmit={handleUpdate}
+      nameField="branches_name"
+      nameLabel="Branch Name"
+
+     
+      dropdown={{
+        label: "Company",
+        name: "company_id",
+        options: companies.map((c) => ({
+          id: c.id,
+          name: c.company_name,
+        })),
+      }}
     />
   );
 }
