@@ -60,6 +60,8 @@ button {
   --font-weight-bolder: 900;
   --togglediv-color: #0b0b0e;
   --border-right-color: #402626;
+  --border-nav-color: #402626;
+  --nav-shadow-color: #201717;
   --active-link-color: #6f2f2f;
   --active-right-link-color: #b25151;
   --padding: 1rem;
@@ -99,6 +101,8 @@ button {
   --border-color: #cccccc;
   --togglediv-color: #c4c4c4;
   --border-right-color: #402626;
+  --border-nav-color: #e1e1e1;
+  --nav-shadow-color: #d1d1d1;
   --active-right-link-color: #b25151;
   --active-link-color: #6a6969;
   --accent: #a33b3b;
