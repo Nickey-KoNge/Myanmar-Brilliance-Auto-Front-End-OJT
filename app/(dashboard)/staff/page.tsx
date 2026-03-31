@@ -9,11 +9,11 @@ import {
   faClockRotateLeft,
   faPlus,
   faTrashCan,
-  faUser,
+  // faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 // Components
-import { PageHeader } from "@/app/components/ui/PageHeader/pageheader";
+// import { PageHeader } from "@/app/components/ui/PageHeader/pageheader";
 import { DataTable } from "@/app/components/ui/DataTable/DataTable";
 //pagination components
 import { Pagination } from "@/app/components/ui/Pagination/Pagination";
@@ -258,123 +258,24 @@ export default function StaffPage() {
     },
   ];
 
-  const renderLiveButtonArea = (
-    <div className={styles.headerActionArea}>
-      <NavigationBtn href="/staff/Addstaff" leftIcon={faPlus}>
-        add staff
-      </NavigationBtn>
-    </div>
-  );
+  // const renderLiveButtonArea = (
+  //   <div className={styles.headerActionArea}>
+  //     <NavigationBtn href="/staff/Addstaff" leftIcon={faPlus}>
+  //       add staff
+  //     </NavigationBtn>
+  //   </div>
+  // );
 
   return (
     <>
-      <PageHeader
+      {/* <PageHeader
         titleData={{
           icon: <FontAwesomeIcon icon={faUser} />,
           text: "Staff Management",
         }}
         actionNode={renderLiveButtonArea}
-      />
+      /> */}
 
-      {/* <PageGridLayout
-        sidebar={
-          <>
-            <p className={styles.gridBoxTitle}>Employee Search</p>
-            <hr className={styles.cuttingLine} />
-
-            <div className={styles.searchContainer}>
-              <TextInput
-                label="Searching"
-                placeholder="Search by name, email..."
-                value={filters.search}
-                onChange={(e) => updateFilter("search", e.target.value)}
-              />
-
-              <div className={styles.filterRow}>
-                <div className={styles.filterRow}>
-                  <DateInput
-                    label="From"
-                    value={filters.startDate}
-                    onChange={(e) => updateFilter("startDate", e.target.value)}
-                    rightIcon={faCalendarDays}
-                  />
-                </div>
-                <DateInput
-                  label="To"
-                  value={filters.endDate}
-                  onChange={(e) => updateFilter("endDate", e.target.value)}
-                  rightIcon={faCalendarDays}
-                />
-              </div>
-
-              <div className={styles.filterRow}>
-                <DropdownInput
-                  label="Branch"
-                  options={branches.map((b) => ({
-                    id: b.id,
-                    name: b.branches_name,
-                  }))}
-                  valueKey="id"
-                  nameKey="name"
-                  value={(filters.branchId as string) || ""}
-                  onChange={(e) => updateFilter("branchId", e.target.value)}
-                  placeholder="All Branches"
-                />
-
-                <DropdownInput
-                  label="Role"
-                  options={roles.map((r) => ({ id: r.id, name: r.role_name }))}
-                  valueKey="id"
-                  nameKey="name"
-                  value={(filters.roleId as string) || ""}
-                  onChange={(e) => updateFilter("roleId", e.target.value)}
-                  placeholder="All Roles"
-                />
-              </div>
-              <div style={{ alignSelf: "flex-start" }}>
-                <ActionBtn
-                  type="reset"
-                  variant="action"
-                  fullWidth={false}
-                  onClick={resetFilters}
-                >
-                  reset
-                </ActionBtn>
-              </div>
-
-              <hr className={styles.cuttingLine} />
-
-              <div className={styles.recentRecord}>
-                <span>
-                  <FontAwesomeIcon icon={faClockRotateLeft} />
-                </span>
-                <p className={styles.recentTitle}>RECENT RECORD</p>
-                <span />
-                <div className={styles.stat}>
-                  <div>
-                    <p className={styles.statLable}>Total Staff :</p>
-                    <p className={styles.textDanger}>{totalRecords}</p>
-                  </div>
-                  <div>
-                    <p className={styles.statLable}>Active Staff :</p>
-                    <p className={styles.textSuccess}>36</p>
-                  </div>
-                  <div>
-                    <p className={styles.statLable}>Inactive Staff :</p>
-                    <p className={styles.textDanger}>4</p>
-                  </div>
-                </div>
-              </div>
-
-              <hr className={styles.cuttingLine} />
-              <p className={styles.lastEdited}>
-                Last Edited :{" "}
-                <span className={styles.spanText}>Nickey (Admin)</span>
-              </p>
-            </div>
-          </>
-        }
-      > */}
       <PageGridLayout
         sidebar={
           <div className={styles.sidebarWrapper}>
@@ -482,7 +383,16 @@ export default function StaffPage() {
         }
       >
         <div>
-          <p className={styles.gridBoxTitle}>EMPLOYEE MASTER RECORDS</p>
+          <div className={styles.tableHeaderArea}>
+            <p className={styles.tableTitle}>EMPLOYEE MASTER RECORDS</p>
+
+            <div className={styles.headerActionArea}>
+              <NavigationBtn href="/staff/Addstaff" leftIcon={faPlus}>
+                add staff
+              </NavigationBtn>
+            </div>
+          </div>
+
           <DataTable
             columns={columns}
             data={staffs}

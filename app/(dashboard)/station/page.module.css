@@ -117,6 +117,7 @@
   display: grid;
   align-items: center;
   gap: 0.5rem;
+  font-size: var(--font-size-s);
 }
 
 .stat div {

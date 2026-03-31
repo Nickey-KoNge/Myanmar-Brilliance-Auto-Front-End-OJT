@@ -140,7 +140,7 @@
 }
 
 .subMenuItem:hover {
-  color: var(--icon-main);
+  color: var(--nav-main);
   border-right-color: var(--active-right-link-color);
   background-color: var(--active-link-color);
 }
@@ -148,7 +148,7 @@
 .subActive {
   border-right-color: var(--active-right-link-color);
   background-color: var(--active-link-color);
-  color: var(--icon-main);
+  color: var(--nav-main);
 }
 
 .subIcon {

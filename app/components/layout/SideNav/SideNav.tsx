@@ -148,7 +148,7 @@ export const SideNav = () => {
           label="Personnel"
           subItems={[
             { icon: faUser, label: "Staff", href: "/staff" },
-            { icon: faUserTie, label: "Customer", href: "/customer" },
+            // { icon: faUserTie, label: "Customer", href: "/customer" },
             { icon: faTruckMoving, label: "Supplier", href: "/supplier" },
             { icon: faIdCardClip, label: "Driver", href: "/driver" },
           ]}

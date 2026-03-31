@@ -96,7 +96,7 @@ button {
   --color-primary-hover: #962e32;
   --text-main: #000000;
   --text-cancel: #eeecec;
-  /* --icon-main: #000000; */
+  --nav-main: #000000;
   --text-muted: #131313;
   --border-color: #cccccc;
   --togglediv-color: #c4c4c4;
@@ -104,13 +104,13 @@ button {
   --border-nav-color: #e1e1e1;
   --nav-shadow-color: #d1d1d1;
   --active-right-link-color: #b25151;
-  --active-link-color: #6a6969;
+  --active-link-color: #e2e2e2;
   --accent: #a33b3b;
   /* table css */
-  --bg-head: #ffffff;
-  --bg-table: #e7e7e7;
-  --bg-row-alt: #d1d1d1;
-  --bg-row-hover: #b9b9b9;
+  --bg-head: #d1d1d1;
+  --bg-table: #ffffff;
+  --bg-row-alt: #f3f3f3;
+  --bg-row-hover: #e8e8e8;
 
   --border-input: #402626;
 }

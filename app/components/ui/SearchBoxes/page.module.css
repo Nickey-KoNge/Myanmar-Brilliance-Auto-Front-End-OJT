@@ -105,6 +105,7 @@
 
 .dateInput {
   cursor: pointer;
+  /* width: 150px !important; */
 }
 
 .dateInput::-webkit-calendar-picker-indicator {
