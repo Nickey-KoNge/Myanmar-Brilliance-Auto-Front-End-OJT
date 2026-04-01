@@ -25,15 +25,17 @@ export default function CreateVehicleBrandPage() {
         }
       });
 
-      await apiClient.post("/master-vehicle/vehicle-brands", formData);
-
+      const response = await apiClient.post(
+        "/master-vehicle/vehicle-brands",
+        formData,
+      );
       router.push("/vehicle-brands");
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        alert(error.message);
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        console.error("VALIDATION ERRORS:", error.response.data.message);
+        alert("Backend Error: " + JSON.stringify(error.response.data.message));
       } else {
-        alert("Error creating vehicle brand.");
-        console.error(error);
+        console.error("Unexpected Error:", error);
       }
     } finally {
       setLoading(false);

@@ -26,8 +26,8 @@ export interface VehicleBrandsFormData {
   country_of_origin: string;
   manufacturer: string;
   description: string;
-  photo?: FileList | null;
   image?: string;
+  photo?: FileList;
 }
 
 interface VehicleBrandsFormProps {
@@ -60,6 +60,7 @@ export const VehicleBrandsForm: React.FC<VehicleBrandsFormProps> = ({
     if (initialData) {
       reset(initialData);
       if (initialData.image) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setPreview(initialData.image);
       }
     }
@@ -119,7 +120,7 @@ export const VehicleBrandsForm: React.FC<VehicleBrandsFormProps> = ({
         onSubmit={handleSubmit(onSubmit)}
         className={styles.formGridContainer}
       >
-        {/* Section: Photo */}
+        {/* Section: Image */}
         <section className={styles.formGridBox}>
           <header className={styles.gridBoxTitle}>
             <span className={styles.pill} />
@@ -137,7 +138,7 @@ export const VehicleBrandsForm: React.FC<VehicleBrandsFormProps> = ({
                 type="file"
                 accept="image/*"
                 id="photo"
-                aria-invalid={!!errors.photo}
+                aria-invalid={!!errors.image}
                 {...register("photo", {
                   required: mode === "create" ? "A photo is required" : false,
                   onChange: handleImageChange,
@@ -165,8 +166,8 @@ export const VehicleBrandsForm: React.FC<VehicleBrandsFormProps> = ({
                 </div>
               </label>
 
-              {errors.photo && (
-                <p className={styles.error}>{errors.photo.message as string}</p>
+              {errors.image && (
+                <p className={styles.error}>{errors.image.message as string}</p>
               )}
             </div>
           </div>

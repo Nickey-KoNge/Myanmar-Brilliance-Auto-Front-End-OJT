@@ -41,7 +41,7 @@ export default function EditVehicleBrandPage() {
             country_of_origin: data.country_of_origin ?? "",
             manufacturer: data.manufacturer ?? "",
             description: data.description ?? "",
-            image: data.image ?? "", // preview image
+            image: data.image ?? "",
           });
         }
       } catch (err) {
@@ -54,7 +54,6 @@ export default function EditVehicleBrandPage() {
     if (id) fetchData();
   }, [id]);
 
-  // ✅ Update Submit (same logic as create)
   const handleSubmit = async (data: VehicleBrandsFormData) => {
     setLoading(true);
     try {

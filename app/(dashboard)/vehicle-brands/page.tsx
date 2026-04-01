@@ -31,34 +31,6 @@ import { useFilters, FilterState } from "@/app/hooks/userFilters";
 import NavigationBtn from "@/app/components/ui/Button/NavigationBtn";
 import ActionBtn from "@/app/components/ui/Button/ActionBtn";
 import DeleteModal from "@/app/components/ui/Delete/DeleteModal";
-// import { getStaffImageUrl } from "@/app/features/lib/image-utils";
-interface Staff {
-  id: string;
-  staffName: string;
-  image: string;
-  email: string;
-  fullAddress: string;
-  street_address: string;
-  city: string;
-  country: string;
-  position: string;
-  branches_name: string;
-  role_name?: string;
-  phone: string;
-}
-
-interface Branch {
-  id: string;
-  branches_name: string;
-  company_id: string;
-  company_name: string;
-}
-
-interface Role {
-  id: string;
-  role_name: string;
-}
-
 interface VehicleBrand {
   id: string;
   vehicle_brand_name: string;
@@ -71,9 +43,6 @@ interface VehicleBrand {
 
 export default function VehicleBrandsPage() {
   const router = useRouter();
-  // const [staffs, setStaffs] = useState<Staff[]>([]);
-  // const [branches, setBranches] = useState<Branch[]>([]);
-  // const [roles, setRoles] = useState<Role[]>([]);
 
   const [vehicleBrands, setVehicleBrands] = useState<VehicleBrand[]>([]);
 
@@ -91,7 +60,7 @@ export default function VehicleBrandsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
-  const PAGE_SIZE = 6;
+  const PAGE_SIZE = 1;
 
   //Active Filters State
   const [activeFilters, setActiveFilters] = useState<FilterState>({
@@ -157,20 +126,18 @@ export default function VehicleBrandsPage() {
 
         if (res && typeof res === "object") {
           console.log(res.data);
-
-          // if (Array.isArray(res.data)) {
-          if (Array.isArray(res)) {
-            vehicleBrandList = res;
+          if (Array.isArray(res.data)) {
+            vehicleBrandList = res.data;
             total = res.total || 0;
             totalPages = res.totalPages || 1;
           } else if (
             res.data &&
             typeof res.data === "object" &&
-            Array.isArray(res)
+            Array.isArray(res.data.data)
           ) {
-            vehicleBrandList = res;
-            total = res.total || 0;
-            totalPages = res.totalPages || 1;
+            vehicleBrandList = res.data.data;
+            total = res.data.total || 0;
+            totalPages = res.data.totalPages || 1;
           }
         }
 
@@ -193,10 +160,8 @@ export default function VehicleBrandsPage() {
     });
   };
   const handleDeleteSuccess = (id: string) => {
-    // setStaffs((prev) => prev.filter((s) => s.id !== id));
     setVehicleBrands((prev) => prev.filter((v) => v.id !== id));
   };
-
   const columns = [
     {
       header: "Vehicle Brand Info",
@@ -340,7 +305,7 @@ export default function VehicleBrandsPage() {
                 `/vehicle-brands/Updatevehiclebrands/${vehicleBrand.id}`,
               )
             }
-            emptyMessage="No staff records found."
+            emptyMessage="No vehicle record records found."
           ></DataTable>
         </div>
 
