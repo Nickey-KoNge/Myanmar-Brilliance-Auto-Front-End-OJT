@@ -9,11 +9,11 @@ import {
   faClockRotateLeft,
   faPlus,
   faTrashCan,
-  faUser,
+  // faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 // Components
-import { PageHeader } from "@/app/components/ui/PageHeader/pageheader";
+// import { PageHeader } from "@/app/components/ui/PageHeader/pageheader";
 import { DataTable } from "@/app/components/ui/DataTable/DataTable";
 //pagination components
 import { Pagination } from "@/app/components/ui/Pagination/Pagination";
@@ -24,7 +24,7 @@ import styles from "./page.module.css";
 import { apiClient } from "@/app/features/lib/api-client";
 import TextInput from "@/app/components/ui/SearchBoxes/TextInput";
 import DateInput from "@/app/components/ui/SearchBoxes/DateInput";
-import DropdownInput from "@/app/components/ui/SearchBoxes/DropdownInput";
+// import DropdownInput from "@/app/components/ui/SearchBoxes/DropdownInput";
 
 // Hook
 import { useFilters, FilterState } from "@/app/hooks/userFilters";
@@ -60,7 +60,7 @@ export default function VehicleBrandsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
-  const PAGE_SIZE = 1;
+  const PAGE_SIZE = 10;
 
   //Active Filters State
   const [activeFilters, setActiveFilters] = useState<FilterState>({
@@ -167,14 +167,14 @@ export default function VehicleBrandsPage() {
       header: "Vehicle Brand Info",
       key: "vehicle_brand_name",
       render: (vehicleBrand: VehicleBrand) => (
-        <div className={styles.staffInfo}>
+        <div className={styles.vehiclebrandnfo}>
           <Image
             src={vehicleBrand.image || "/default-user.png"}
             alt={vehicleBrand.vehicle_brand_name}
             width={40}
             height={40}
             unoptimized
-            className={styles.staffImg}
+            className={styles.vehiclebrandImg}
           />
           {vehicleBrand.vehicle_brand_name}
         </div>
@@ -182,6 +182,7 @@ export default function VehicleBrandsPage() {
     },
     { header: "Country", key: "country_of_origin" },
     { header: "Manufacturer", key: "manufacturer" },
+    { header: "Description", key: "description" },
     {
       header: "Actions",
       key: "actions",
@@ -199,24 +200,8 @@ export default function VehicleBrandsPage() {
     },
   ];
 
-  const renderLiveButtonArea = (
-    <div className={styles.headerActionArea}>
-      <NavigationBtn href="/vehicle-brands/Addvehiclebrands" leftIcon={faPlus}>
-        add brand
-      </NavigationBtn>
-    </div>
-  );
-
   return (
     <>
-      <PageHeader
-        titleData={{
-          icon: <FontAwesomeIcon icon={faUser} />,
-          text: "Vehicle Brands Management",
-        }}
-        actionNode={renderLiveButtonArea}
-      />
-
       <PageGridLayout
         sidebar={
           <div className={styles.sidebarWrapper}>
@@ -296,7 +281,29 @@ export default function VehicleBrandsPage() {
         }
       >
         <div>
-          <p className={styles.gridBoxTitle}>VEHICLE BRANDS MASTER RECORDS</p>
+          <div className={styles.tableHeaderArea}>
+            <div className={styles.paginationInfoWrapper}>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                totalRecords={totalRecords}
+                pageSize={PAGE_SIZE}
+                onPageChange={setCurrentPage}
+                showOnlyInfo={true}
+              />
+            </div>
+            <p className={styles.tableTitle}>VEHICLE BRANDS MASTER RECORDS</p>
+
+            <div className={styles.headerActionArea}>
+              <NavigationBtn
+                href="/vehicle-brands/Addvehiclebrands"
+                leftIcon={faPlus}
+              >
+                add brand
+              </NavigationBtn>
+            </div>
+          </div>
+
           <DataTable
             columns={columns}
             data={vehicleBrands}
@@ -305,8 +312,8 @@ export default function VehicleBrandsPage() {
                 `/vehicle-brands/Updatevehiclebrands/${vehicleBrand.id}`,
               )
             }
-            emptyMessage="No vehicle record records found."
-          ></DataTable>
+            emptyMessage="No vehicle brands record records found."
+          />
         </div>
 
         <Pagination
@@ -314,7 +321,8 @@ export default function VehicleBrandsPage() {
           totalPages={totalPages}
           totalRecords={totalRecords}
           pageSize={PAGE_SIZE}
-          onPageChange={(page) => setCurrentPage(page)}
+          onPageChange={setCurrentPage}
+          showOnlyActions={true}
         />
       </PageGridLayout>
 

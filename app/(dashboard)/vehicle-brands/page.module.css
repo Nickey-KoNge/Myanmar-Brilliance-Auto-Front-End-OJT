@@ -9,28 +9,48 @@
 .gridBoxTitle {
   color: var(--text-main);
   text-align: center;
-  margin-bottom: calc(var(--margin) * 1.5);
+
+  margin-bottom: var(--padding-inside);
   font-weight: 600;
 }
 
 /* Staff Table Info */
-.staffInfo {
+.vehiclebrandnfo {
   display: flex;
   align-items: center;
   gap: 10px;
   color: var(--text-main);
 }
 
-.staffImg {
+.vehiclebrandImg {
   border-radius: var(--radius);
   object-fit: cover;
 }
 
 /* Actions */
 .headerActionArea {
+  position: absolute;
+  right: 0;
   display: flex;
   align-items: center;
 }
+.tableHeaderArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: var(--padding-inside);
+  min-height: 50px;
+}
+
+.paginationInfoWrapper {
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
 
 .deleteBtn {
   border: none;
@@ -64,8 +84,8 @@
   margin-top: auto;
   display: flex;
   flex-direction: column;
-   gap: 1rem;
-   /* margin-bottom: 1rem; */
+  gap: 1rem;
+  /* margin-bottom: 1rem; */
 }
 .searchContainer {
   display: flex;
@@ -87,7 +107,14 @@
   gap: 1rem;
   align-items: center;
 }
-
+.tableTitle {
+  color: var(--text-main);
+  font-weight: 600;
+  margin: 0;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  text-align: center;
+}
 .recentRecord span:nth-of-type(1) {
   background: var(--accent);
   padding: 0.5rem;
@@ -103,6 +130,7 @@
   display: grid;
   align-items: center;
   gap: 0.5rem;
+  font-size: 0.85rem;
 }
 
 .stat div {
@@ -124,7 +152,7 @@
 }
 
 .spanText {
-  color: var(--text-main);
+  color: var(--color-primary);
 }
 
 /* Status Colors */

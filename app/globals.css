@@ -67,7 +67,7 @@ button {
   --padding: 1rem;
   --radius: 8px;
   --gap: 1.5rem;
-  --accent: #a33b3b;
+
   /* table css */
   --bg-table: #2d2d30;
   --bg-head: #3b3b41;
@@ -76,6 +76,8 @@ button {
   --bg-btn: #0d0d0d;
   --border-input: #402626;
   /* Btn colors */
+  --bg-delete: #602424;
+  --bg-delete-card: #343434;
   --accent: #a33b3b;
   --accent-hover: #c24646;
   --danger: #ff4d4f;
@@ -83,6 +85,7 @@ button {
   --success-hover: #338f35;
 
   --padding: 1rem;
+  --padding-inside: 0.75rem;
   --margin: 1rem;
 }
 .light-mode {
@@ -106,6 +109,7 @@ button {
   --active-right-link-color: #b25151;
   --active-link-color: #e2e2e2;
   --accent: #a33b3b;
+  --bg-delete-card: #ffffff;
   /* table css */
   --bg-head: #d1d1d1;
   --bg-table: #ffffff;

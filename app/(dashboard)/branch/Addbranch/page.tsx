@@ -50,6 +50,7 @@ const [companies, setCompanies] = useState<Company[]>([]);
   onSubmit={handleSubmit}
   nameField="branches_name"
   nameLabel="Branch Name"
+  cancelHref="/branch"
   dropdown={{
     label: "Company",
     name: "company_id",

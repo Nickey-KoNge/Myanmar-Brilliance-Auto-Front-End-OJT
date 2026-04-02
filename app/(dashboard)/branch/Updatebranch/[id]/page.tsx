@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { BranchForm } from "../../components/BranchForm/BranchForm";
 import { useParams, useRouter } from "next/navigation";
 import { apiClient } from "@/app/features/lib/api-client";
+import { FieldValues } from "react-hook-form";
 
 interface BranchFormData {
+  [key: string]: string | undefined;
   branches_name: string;
   gps_location: string;
   phone: string;
@@ -14,9 +16,14 @@ interface BranchFormData {
   description: string;
   company_id: string;
   id: string;
-  company: string;
-  staff: string;
-  stations: string;
+  company?: string;
+  staff?: string;
+  stations?: string;
+}
+
+interface Company {
+  id: string;
+  company_name: string;
 }
 
 export default function UpdateBranch() {
@@ -28,8 +35,7 @@ export default function UpdateBranch() {
     undefined,
   );
 
-
-  const [companies, setCompanies] = useState<any[]>([]);
+  const [companies, setCompanies] = useState<Company[]>([]);
 
   useEffect(() => {
     const fetchBranchData = async () => {
@@ -38,16 +44,15 @@ export default function UpdateBranch() {
           `/master-company/branches/${branchId}`,
         );
 
+        // TypeScript error 2352 ကို ရှောင်ရန် unknown သို့ အရင် cast လုပ်ပါ
         const rawData = (response as { data?: unknown }).data || response;
         const typedData = rawData as BranchFormData;
 
         if (typedData) {
-          const formattedData: BranchFormData = {
+          setBranchData({
             ...typedData,
             company_id: typedData.company_id || "",
-          };
-
-          setBranchData(formattedData);
+          });
         }
       } catch (error) {
         console.error("Error fetching branch data:", error);
@@ -59,15 +64,16 @@ export default function UpdateBranch() {
     }
   }, [branchId]);
 
- 
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
         const res = await apiClient.get("/master-company/company");
 
-        const raw = (res as any).data || res;
+        // 🛑 Error 2352 Fix: unknown အရင်ခံပြီးမှ Company[] ဖြစ်ကြောင်း cast လုပ်ပါ
+        const raw = (res as { data?: unknown }).data || res;
+        const companyArray = raw as Company[];
 
-        setCompanies(raw);
+        setCompanies(Array.isArray(companyArray) ? companyArray : []);
       } catch (error) {
         console.error("Error fetching companies:", error);
       }
@@ -76,43 +82,39 @@ export default function UpdateBranch() {
     fetchCompanies();
   }, []);
 
-
-  console.log("companies in Update Branch Page:", companies);
-
-  const handleUpdate = async (data: Record<string, any>) => {
+  const handleUpdate = async (data: FieldValues) => {
     try {
-      const { id, company, staff, stations, ...filteredData } = data;
-
-      const payload: Partial<BranchFormData> = { ...filteredData };
+      // 🛑 ESLint Unused-vars Fix:
+      // Variable ထုတ်ယူမယ့်အစား မလိုတဲ့ property တွေကို delete လုပ်တာက ပိုသန့်ရှင်းပါတယ်
+      const payload = { ...data };
+      delete payload.id;
+      delete payload.company;
+      delete payload.staff;
+      delete payload.stations;
 
       if (!payload.company_id) {
         delete payload.company_id;
       }
 
-      await apiClient.patch(
-        `/master-company/branches/${branchId}`,
-        payload,
-      );
-
+      await apiClient.patch(`/master-company/branches/${branchId}`, payload);
       router.push("/branch");
     } catch (error) {
       console.error("Error updating branch:", error);
     }
   };
 
-  console.log("Branch Data in Update Branch Page:", branchData);
+  if (!branchData) {
+    return <div style={{ padding: "2rem" }}>Loading...</div>;
+  }
 
-  return !branchData ? (
-    <div>Loading...</div>
-  ) : (
+  return (
     <BranchForm
       mode="update"
       initialData={branchData}
       onSubmit={handleUpdate}
       nameField="branches_name"
       nameLabel="Branch Name"
-
-     
+      cancelHref="/branch"
       dropdown={{
         label: "Company",
         name: "company_id",

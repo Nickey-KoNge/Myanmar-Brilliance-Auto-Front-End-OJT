@@ -51,15 +51,37 @@
 }
 
 .togglediv {
-  background-color: var(--togglediv-color);
-  border-radius: 10px;
-  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1.2rem;
   padding: 0 1rem;
-  border: 1px solid #402626;
+}
+.themeToggle {
+  background: var(--bg-input);
+  border: 1px solid var(--border-nav-color);
+  border-radius: 8px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-main);
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.themeToggle:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background: var(--bg-card);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.toggleIcon {
+  font-size: 1.1rem;
 }
 
 .iconBtn,
@@ -69,12 +91,12 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  color: var(--text-main);
+  color: var(--color-primary);
   transition: color 0.3s ease;
-  font-size: 18px;
+  font-size: 20px;
 }
 
-.alertBtn {
+.alertBtn:hover {
   color: var(--color-primary);
 }
 
@@ -86,9 +108,9 @@
   position: absolute;
   top: -6px;
   right: -8px;
-  background-color: #310d0d;
-  color: #d1d1d1;
-  font-size: 0.8rem;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  font-size: 0.75rem;
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -96,6 +118,7 @@
   justify-content: center;
   align-items: center;
   font-weight: bold;
+  border: 2px solid var(--bg-card);
 }
 
 .userProfile {

@@ -19,7 +19,7 @@ import {
   faChevronRight,
   faChevronDown,
   faUser,
-  faUserTie,
+  // faUserTie,
   faTruckMoving,
   faIdCardClip,
   faBuildingFlag,
@@ -29,7 +29,15 @@ import {
   faTruckFast,
 } from "@fortawesome/free-solid-svg-icons";
 
-const NavItem = ({ icon, label, href }: { icon: IconDefinition; label: string; href: string }) => {
+const NavItem = ({
+  icon,
+  label,
+  href,
+}: {
+  icon: IconDefinition;
+  label: string;
+  href: string;
+}) => {
   const pathname = usePathname();
   const isActive = pathname.startsWith(href);
 
@@ -58,7 +66,14 @@ interface NavDropdownProps {
   isHovered: boolean;
 }
 
-const NavDropdown: React.FC<NavDropdownProps> = ({ icon, label, subItems, isOpen, onToggle, isHovered }) => {
+const NavDropdown: React.FC<NavDropdownProps> = ({
+  icon,
+  label,
+  subItems,
+  isOpen,
+  onToggle,
+  isHovered,
+}) => {
   const pathname = usePathname();
 
   const shouldShowSubMenu = isHovered && isOpen;
@@ -69,7 +84,10 @@ const NavDropdown: React.FC<NavDropdownProps> = ({ icon, label, subItems, isOpen
         <FontAwesomeIcon icon={icon} className={styles.icon} />
         <span className={styles.menuText}>{label}</span>
         {isHovered && (
-          <FontAwesomeIcon icon={shouldShowSubMenu ? faChevronDown : faChevronRight} className={styles.arrow} />
+          <FontAwesomeIcon
+            icon={shouldShowSubMenu ? faChevronDown : faChevronRight}
+            className={styles.arrow}
+          />
         )}
       </div>
 
@@ -78,9 +96,18 @@ const NavDropdown: React.FC<NavDropdownProps> = ({ icon, label, subItems, isOpen
           {subItems.map((item, index) => {
             const isActive = pathname.startsWith(item.href);
             return (
-              <Link key={index} href={item.href} style={{ textDecoration: "none" }}>
-                <div className={`${styles.subMenuItem} ${isActive ? styles.subActive : ""}`}>
-                  <FontAwesomeIcon icon={item.icon} className={styles.subIcon} />
+              <Link
+                key={index}
+                href={item.href}
+                style={{ textDecoration: "none" }}
+              >
+                <div
+                  className={`${styles.subMenuItem} ${isActive ? styles.subActive : ""}`}
+                >
+                  <FontAwesomeIcon
+                    icon={item.icon}
+                    className={styles.subIcon}
+                  />
                   <span className={styles.menuText}>{item.label}</span>
                 </div>
               </Link>
@@ -99,6 +126,8 @@ export const SideNav = () => {
   const getActiveMenu = (path: string) => {
     if (path.match(/^\/(staff|customer|supplier|driver)/)) return "Personnel";
     if (path.match(/^\/(company|branch|station|groups)/)) return "Entity";
+    if (path.match(/^\/(vehicle-brands|vehicle-models|vehicles)/))
+      return "Fleet";
     return null;
   };
 
@@ -106,9 +135,11 @@ export const SideNav = () => {
 
   const currentActiveMenu = getActiveMenu(pathname);
 
-  const openDropdown = clickedDropdown !== null ? clickedDropdown : currentActiveMenu;
+  const openDropdown =
+    clickedDropdown !== null ? clickedDropdown : currentActiveMenu;
 
-  const isDashboardActive = pathname === "/" || pathname.startsWith("/dashboard");
+  const isDashboardActive =
+    pathname === "/" || pathname.startsWith("/dashboard");
 
   const handleToggle = (dropdownName: string) => {
     if (isHovered) {
@@ -133,14 +164,16 @@ export const SideNav = () => {
       </div>
       <div className={styles.menu}>
         <Link href="/dashboard" style={{ textDecoration: "none" }}>
-          <div className={`${styles.menuItem} ${isDashboardActive ? styles.active : ""}`}>
+          <div
+            className={`${styles.menuItem} ${isDashboardActive ? styles.active : ""}`}
+          >
             <FontAwesomeIcon icon={faLaptop} className={styles.icon} />
             <span className={styles.menuText}>Dashboard</span>
           </div>
         </Link>
 
         <div className={styles.sectionTitle}>
-          <span className={styles.menuText}>Inventory</span>
+          <span className={styles.menuText}>Inventory / Master Data</span>
         </div>
 
         <NavDropdown
@@ -170,9 +203,6 @@ export const SideNav = () => {
           onToggle={() => handleToggle("Entity")}
           isHovered={isHovered}
         />
-
-        <NavItem icon={faWrench} label="Spare-part" href="/spare-part" />
-        
         <NavDropdown
           icon={faCar}
           label="Fleet"
@@ -185,7 +215,9 @@ export const SideNav = () => {
           ]}
           isOpen={openDropdown === "Fleet"}
           onToggle={() => handleToggle("Fleet")}
+          isHovered={isHovered}
         />
+        <NavItem icon={faWrench} label="Spare-part" href="/spare-part" />
 
         <div className={styles.sectionTitle}>
           <span className={styles.menuText}>Sale</span>
