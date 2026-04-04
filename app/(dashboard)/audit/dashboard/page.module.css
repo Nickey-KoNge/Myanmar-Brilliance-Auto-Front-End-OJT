@@ -1,0 +1,87 @@
+.dashboardContainer {
+  padding: 1.5rem;
+  background-color: var(--bg-main);
+  ာငည-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+.pageTitle {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.titleIcon {
+  color: var(--color-primary);
+}
+
+/* Summary Cards Grid */
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--gap);
+}
+
+.summaryCard {
+  background-color: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  border-left-width: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardLogs {
+  border-left-color: #3b82f6;
+}
+.cardUsers {
+  border-left-color: var(--success);
+}
+.cardModule {
+  border-left-color: #a855f7;
+}
+
+.cardLabel {
+  font-size: var(--font-size-s);
+  color: var(--text-muted);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: 0.25rem;
+}
+
+.cardValue {
+  font-size: 2rem;
+  font-weight: var(--font-weight-bolder);
+  color: var(--text-main);
+}
+
+.cardIcon {
+  font-size: 2.5rem;
+  opacity: 0.2;
+  color: var(--text-main);
+}
+
+/* Charts Grid */
+.chartsGridRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
+}
+
+.bottomChartRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gap);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .chartsGridRow {
+    grid-template-columns: 1fr;
+  }
+}

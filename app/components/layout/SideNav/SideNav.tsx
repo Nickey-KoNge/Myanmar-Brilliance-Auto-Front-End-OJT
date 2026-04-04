@@ -12,10 +12,10 @@ import {
   faWrench,
   faCar,
   faShoppingCart,
-  faFileInvoice,
+  // faFileInvoice,
   faRoute,
   faKey,
-  faDollarSign,
+  // faDollarSign,
   faChevronRight,
   faChevronDown,
   faUser,
@@ -27,6 +27,9 @@ import {
   faChargingStation,
   faObjectGroup,
   faTruckFast,
+  faClipboardList,
+  faGauge,
+  faTableList,
 } from "@fortawesome/free-solid-svg-icons";
 
 const NavItem = ({
@@ -219,15 +222,15 @@ export const SideNav = () => {
         />
         <NavItem icon={faWrench} label="Spare-part" href="/spare-part" />
 
-        <div className={styles.sectionTitle}>
+        {/* <div className={styles.sectionTitle}>
           <span className={styles.menuText}>Sale</span>
         </div>
-        <NavItem icon={faShoppingCart} label="Sale" href="/sale" />
+        <NavItem icon={faShoppingCart} label="Sale" href="/sale" /> */}
 
-        <div className={styles.sectionTitle}>
+        {/* <div className={styles.sectionTitle}>
           <span className={styles.menuText}>Purchase</span>
         </div>
-        <NavItem icon={faFileInvoice} label="Purchase" href="/purchase" />
+        <NavItem icon={faFileInvoice} label="Purchase" href="/purchase" /> */}
 
         <div className={styles.sectionTitle}>
           <span className={styles.menuText}>Trip</span>
@@ -240,9 +243,25 @@ export const SideNav = () => {
         <NavItem icon={faKey} label="Rental" href="/rental" />
 
         <div className={styles.sectionTitle}>
+          <span className={styles.menuText}>Audit</span>
+        </div>
+        <NavDropdown
+          icon={faClipboardList}
+          label="Audit"
+          subItems={[
+            { icon: faGauge, label: "Dashboard", href: "/audit/dashboard" },
+            { icon: faTableList, label: "Audit List", href: "/audit" },
+            // { icon: faIdCardClip, label: "Driver", href: "/driver" },
+          ]}
+          isOpen={openDropdown === "Audit"}
+          onToggle={() => handleToggle("Audit")}
+          isHovered={isHovered}
+        />
+
+        {/* <div className={styles.sectionTitle}>
           <span className={styles.menuText}>Cashflow</span>
         </div>
-        <NavItem icon={faDollarSign} label="Cashflow" href="/cashflow" />
+        <NavItem icon={faDollarSign} label="Cashflow" href="/cashflow" /> */}
       </div>
     </aside>
   );
